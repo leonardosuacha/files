@@ -1,0 +1,96 @@
+<div class="navigation col-lg-12">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <a [routerLink]="['/home']" class="navbar-brand"> {{ title }} </a>
+      </div>
+
+    <!-- NAVBAR LOGEADO -->
+      <ul class="nav navbar-nav" *ngIf="identity">
+        <li>
+          <a [routerLink]="['/home']" [routerLinkActive]="['']">
+            <span class="glyphicon glyphicon-home"></span>
+            Inicio
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/timeline']">
+            <span class="glyphicon glyphicon-list"></span>
+            Timeline
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/personas']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+            Personas
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/mensajes']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-envelope"></span>
+            Mis Mensajes
+          </a>
+        </li>
+
+      </ul>
+
+    <!-- NAVBAR DESLOGEADO -->
+      <ul class="nav navbar navbar-nav navbar-right" *ngIf="!identity">
+        <li>
+          <a [routerLink]="['/login']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-log-in"></span>
+            Login
+          </a>
+        </li>
+
+        <li>
+          <a [routerLink]="['/registro']" [routerLinkActive]="['active']">
+            <span class="glyphicon glyphicon-user"></span>
+            Registro
+          </a>
+        </li>
+      </ul>
+
+
+    <!-- NAVBAR RIGHT -->
+      <ul class="nav navbar-nav navbar-right" *ngIf="identity">
+        <li class="avatar">
+          <!-- cargar imagen usuario -->
+          <img src="{{ url+'get-image-user/'+identity.image }}" *ngIf="identity && identity.image"/>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            Hola {{identity.name}}! <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a [routerLink]="['/perfil',identity._id]">
+                <span class="glyphicon glyphicon-user"></span>
+                Mi Perfil
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['/mis-datos']">
+                <span class="glyphicon glyphicon-cog"></span>
+                Mis datos
+              </a>
+            </li>
+            <li>
+              <a class="pointer" (click)="logout()" >
+                <span class="glyphicon glyphicon-log-out"></span>
+                Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>

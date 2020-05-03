@@ -1,0 +1,94 @@
+<div class="col-lg-8">
+  <h1 class="h1-strong">{{title}}</h1>
+
+  <div id="data-profile" *ngIf="user ">
+    <div class="avatar pull-left">
+      <img src="{{ url+'get-image-user/'+user.image }}" *ngIf="user.image"/>
+      <img src="assets/user.jpg" *ngIf="!user.image">
+    </div>
+
+
+    <div class="user-name pull-left">
+      <div class="label label-default pull-left" *ngIf="followed">
+        Te sigue
+      </div>
+      <div class="clearfix"></div>
+      <p class="name">{{user.name+' '+user.surname}}</p>
+      <p class="nick">{{user.nick}}</p>
+      <div class="clearfix"></div>
+      <div class="follow pull-left">
+
+      <button type="button"class="btn btn-primary"
+              *ngIf="following"
+              (click)="unfollowUser(user._id)"
+              (mouseenter)="mouseEnter(user._id)"
+              (mouseleave)="mouseLeave()"
+              [class.btn-danger]=" user._id == followUserOver">
+              <span *ngIf=" user._id == followUserOver; else following">
+                    Dejar de Seguir
+              </span>
+
+              <ng-template #following>
+                Siguiendo
+              </ng-template>
+
+      </button>
+
+        <button type="button"class="btn btn-success"
+                *ngIf="!following"
+                (click)="followUser(user._id)">Seguir</button>
+      </div>
+
+    </div>
+
+    <div class="stats pull-left" *ngIf="stats">
+      <div class="following-data">
+        <a [routerLink]="['/siguiendo',user._id,1]">
+          <span class="label-stat">
+            Siguiendo
+          </span>
+          <span class="number-stat">
+            {{stats.following}}
+          </span>
+        </a>
+      </div>
+
+      <div class="following-data">
+        <a [routerLink]="['/seguidores',user._id,1]">
+          <span class="label-stat">
+            Seguidores
+          </span>
+          <span class="number-stat">
+            {{stats.followed}}
+          </span>
+        </a>
+      </div>
+
+      <div class="following-data">
+        <a [routerLink]="['/perfil',user._id]">
+          <span class="label-stat">
+            Publicaciones
+          </span>
+          <span class="number-stat" *ngIf="stats.publications == 1; else maspub">
+            {{stats.publications}}
+          </span>
+          <ng-template #maspub>
+            <span class="number-stat">
+              {{stats.publications}}
+            </span>
+          </ng-template>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="col-lg-11 publications col-lg-offset-1" *ngIf="user">
+      <publications [user]="user._id"></publications>
+    </div>
+
+  </div>
+
+
+</div>
+
+<sidebar></sidebar>

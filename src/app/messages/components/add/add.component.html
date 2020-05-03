@@ -1,0 +1,30 @@
+<div class="col-lg-8">
+  <h3>{{title}}</h3>
+
+  <div class="alert alert-success" *ngIf="status == 'success'">
+    Mensaje enviado correctamente, míralo en <a [routerLink]="['/mensajes/enviados']">tus mensajes enviados</a>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="status == 'error'">
+    No se ha podido enviar el mensaje.
+  </div>
+
+  <form #formAdd (ngSubmit)="onSubmit(formAdd)">
+    <p>
+      <label>Para: </label>
+      <select *ngIf="follows" name="receiver" class="form-control" [(ngModel)]="message.receiver" required>
+        <option *ngFor="let follow of follows" value="{{follow.user._id}}">
+          {{follow.user.name+' '+follow.user.surname+ ' ('+follow.user.nick+')'}}
+        </option>
+      </select>
+    </p>
+
+    <p>
+      <label>Mensaje</label>
+      <textarea name="text" #text [(ngModel)]="message.text" class="form-control" required></textarea>
+
+    </p>
+
+    <input type="submit" value="{{title}}" class="btn btn-success"/>
+  </form>
+</div>
